@@ -1,0 +1,16 @@
+{
+  "name": "quartzjs",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@discordjs/rest": "^2.5.1",
+    "discord-api-types": "^0.38.18",
+    "picocolors": "^1.1.1"
+  }
+}

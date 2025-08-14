@@ -1,0 +1,27 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "$schema": "https://json.schemastore.org/tsconfig.json",
+  "compilerOptions": {
+    "target": "es2023",
+    "module": "commonjs",
+    "incremental": true,
+    "declaration": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "noUncheckedIndexedAccess": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedParameters": true,
+
+    "paths": {
+      "@quartz/*": ["./packages/quartz/src/*"],
+      "@core/*": ["./packages/core/src/*"]
+    }
+  },
+
+  "references": [
+    { "path": "./packages/quartz" },
+    { "path": "./packages/core" },
+  ]
+}

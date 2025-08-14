@@ -1,0 +1,12 @@
+{
+  // Visit https://aka.ms/tsconfig to read more about this file
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist-adapters-djs"
+  },
+  "include": ["src/**/*.ts"],
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
