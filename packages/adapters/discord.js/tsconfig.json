@@ -8,5 +8,7 @@
   "include": ["src/**/*.ts"],
   "engines": {
     "node": ">=22.12.0"
-  }
+  },
+    "references": [{ "path": "../../core" }]
+
 }

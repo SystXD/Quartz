@@ -10,18 +10,21 @@
     "moduleResolution": "node",
     "noUncheckedIndexedAccess": true,
     "esModuleInterop": true,
+    "ignoreDeprecations": "6.0",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "noUnusedParameters": true,
 
     "paths": {
       "@quartz/*": ["./packages/quartz/src/*"],
-      "@core/*": ["./packages/core/src/*"]
+      "@core/*": ["./packages/core/src/*"],
+      "@adapters/discord.js/*": ["./packages/adapters/discord.js/src/*"]
     }
   },
 
   "references": [
     { "path": "./packages/quartz" },
     { "path": "./packages/core" },
+     { "path": "./packages/adapters/discord.js" }
   ]
 }
