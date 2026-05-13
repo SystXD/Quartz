@@ -8,10 +8,9 @@ export class QuartzError extends Error {
   constructor(
     public code: QuartzErrorCode | string,
     message: string,
-    public details?: Record<string, any>
+    public details?: Record<string, any>,
   ) {
     super(message);
-
     this.name = "QuartzError";
   }
 }
@@ -19,5 +18,5 @@ export class QuartzError extends Error {
 export const error = (
   code: QuartzErrorCode | string,
   message: string,
-  details?: Record<string, any>
+  details?: Record<string, any>,
 ) => new QuartzError(code, message, details);
