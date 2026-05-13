@@ -28,7 +28,7 @@ export class PluginManager {
 
   public async register<T extends BasePlugin>(
     PluginClass: PluginConstructor<T>,
-    options: PluginRegistrationOptions = {}
+    options: PluginRegistrationOptions = {},
   ): Promise<T> {
     const { args = [], autoActivate = false } = options;
 
@@ -36,7 +36,10 @@ export class PluginManager {
     try {
       plugin = new PluginClass(...args);
     } catch (err) {
-      logger.error(`[QuartzError] Failed to construct plugin ${PluginClass.name}`, { cause: err });
+      logger.error(
+        `[QuartzError] Failed to construct plugin ${PluginClass.name}`,
+        { cause: err },
+      );
       throw err;
     }
 
@@ -52,7 +55,10 @@ export class PluginManager {
       try {
         await plugin.activate();
       } catch (err) {
-        logger.error(`[QuartzError] Failed to auto-activate plugin ${plugin.name}`, { cause: err });
+        logger.error(
+          `[QuartzError] Failed to auto-activate plugin ${plugin.name}`,
+          { cause: err },
+        );
       }
     }
 
@@ -67,7 +73,10 @@ export class PluginManager {
       try {
         await plugin.deactivate();
       } catch (err) {
-        logger.error(`[QuartzError] Failed to deactivate plugin ${plugin.name}`, { cause: err });
+        logger.error(
+          `[QuartzError] Failed to deactivate plugin ${plugin.name}`,
+          { cause: err },
+        );
       }
     }
 
@@ -83,7 +92,9 @@ export class PluginManager {
       await plugin.activate();
       return true;
     } catch (err) {
-      logger.error(`[QuartzError] Failed to activate plugin ${plugin.name}`, { cause: err });
+      logger.error(`[QuartzError] Failed to activate plugin ${plugin.name}`, {
+        cause: err,
+      });
       return false;
     }
   }
@@ -96,36 +107,38 @@ export class PluginManager {
       await plugin.deactivate();
       return true;
     } catch (err) {
-      logger.error(`[QuartzError] Failed to deactivate plugin ${plugin.name}`, { cause: err });
+      logger.error(`[QuartzError] Failed to deactivate plugin ${plugin.name}`, {
+        cause: err,
+      });
       return false;
     }
   }
 
   public async runHook<K extends keyof BasePlugin>(
     hookName: K,
-    ...args: PluginMethodParams<K>
+    ...args: PluginMethodParams<K> extends never ? [] : PluginMethodParams<K>
   ): Promise<Array<Awaited<PluginMethodReturn<K>>>> {
     const results: Array<Awaited<PluginMethodReturn<K>>> = [];
-
     for (const plugin of this.plugins.values()) {
       try {
         const method = plugin[hookName];
         if (plugin.isActive && typeof method === "function") {
           const result = await Promise.resolve(
-            (method as (...a: PluginMethodParams<K>) => PluginMethodReturn<K>).apply(
-              plugin,
-              args
-            )
+            (
+              method as (...a: PluginMethodParams<K>) => PluginMethodReturn<K>
+            ).apply(plugin, args as PluginMethodParams<K>),
           );
           results.push(result as Awaited<PluginMethodReturn<K>>);
         }
       } catch (err) {
-        logger.error(`[QuartzError] "${hookName.toString()}" hook failed for ${plugin.name}`, {
-          cause: err,
-        });
+        logger.error(
+          `[QuartzError] "${hookName.toString()}" hook failed for ${plugin.name}`,
+          {
+            cause: err,
+          },
+        );
       }
     }
-
     return results;
   }
 

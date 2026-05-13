@@ -4,5 +4,6 @@ export abstract class ClientAdapter<T> {
     public abstract connect(): Promise<void>;
     public abstract disconnect(): Promise<void>;
     public abstract adapterClient: T
+    public abstract isReady(): Promise<boolean>;
 }
 
